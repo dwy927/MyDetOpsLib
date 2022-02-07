@@ -26,7 +26,7 @@ def get_extensions():
         op_files = glob.glob('./detops/csrc/pytorch/*.cpp')
         extension = CppExtension
 
-    include_path = os.path.abspath('./detops/csrc')
+    include_path = os.path.abspath('./detops/csrc/include')
     ext_ops = extension(name=ext_name,
                         sources=op_files,
                         include_dirs=[include_path],
