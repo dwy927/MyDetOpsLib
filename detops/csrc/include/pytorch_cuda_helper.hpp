@@ -10,6 +10,18 @@
 
 #include <cuda.h>
 
+#define THREADS_PER_BLOCK 512
+
+inline int GET_BLOCKS(const int N) {
+  const int optimal_block_num = (N + THREADS_PER_BLOCK - 1) / THREADS_PER_BLOCK;
+  const int max_block_num = 4096;
+  return min(optimal_block_num, max_block_num);
+}
+
+#define CUDA_1D_KERNEL_LOOP(i, n) \
+  for (int i = blockIdx.x * blockDim.x + threadIdx.x; i < (n); \
+      i += blockDim.x * gridDim.x)
+
 
 using at::Half;
 using at::Tensor;

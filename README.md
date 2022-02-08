@@ -6,7 +6,7 @@ Ref from [mmcv](https://github.com/open-mmlab/mmcv).
 
 - [x] NMS
 - [x] SoftNMS
-- [ ] RoIPool
+- [x] RoIPool
 - [ ] RoIAlign
 - [ ] DeformRoIPool
 - [ ] DeformConv2d
