@@ -1,3 +1,3 @@
-from .nms import nms
+from .nms import nms, softnms
 
-__all__ = ['nms']
+__all__ = ['nms', 'softnms']

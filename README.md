@@ -4,7 +4,8 @@ Ref from [mmcv](https://github.com/open-mmlab/mmcv).
 
 ## Ops(TODO)
 
-- [ ] NMS
+- [x] NMS
+- [x] SoftNMS
 - [ ] RoIPool
 - [ ] RoIAlign
 - [ ] DeformRoIPool
