@@ -7,8 +7,8 @@ Ref from [mmcv](https://github.com/open-mmlab/mmcv).
 - [x] NMS
 - [x] SoftNMS
 - [x] RoIPool
-- [ ] RoIAlign
-- [ ] DeformRoIPool
+- [x] RoIAlign
+- [x] DeformRoIPool
 - [ ] DeformConv2d
 - [ ] FocalLoss
 - [ ] SyncBN

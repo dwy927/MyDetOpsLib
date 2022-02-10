@@ -7,6 +7,7 @@ template <typename T>
 struct BIPreCalc {
   int p1, p2, p3, p4;
   T w1, w2, w3, w4;
+  T lx, ly, hx, hy;
 };
 
 template <typename T>
@@ -18,6 +19,7 @@ __device__ void pre_calc_bilinear_interpolate(
     // empty
     pc->w1 = pc->w2 = pc->w3 = pc->w4 = 0.;
     pc->p1 = pc->p2 = pc->p3 = pc->p4 = -1;
+    pc->lx = pc->ly = pc->hx = pc->hy = 0;
     return;
   }
 
@@ -51,6 +53,11 @@ __device__ void pre_calc_bilinear_interpolate(
   pc->w2 = hy * lx;
   pc->w3 = ly * hx;
   pc->w4 = ly * lx;
+  pc->lx = lx;
+  pc->ly = ly;
+  pc->hx = hx;
+  pc->hy = hy;
+
   return;
 }
 

@@ -23,6 +23,19 @@ void roi_align_backward(Tensor grad_output, Tensor rois, Tensor argmax_y,
                         int aligned_width, float spatial_scale,
                         int sampling_ratio, int pool_mode, bool aligned);
 
+void deform_roi_pool_forward(Tensor input, Tensor rois, Tensor offset,
+                             Tensor output, int pooled_height, int pooled_width,
+                             float spatial_scale, int sampling_ratio,
+                             float gamma);
+
+void deform_roi_pool_backward(Tensor grad_output, Tensor input, Tensor rois,
+                              Tensor offset, Tensor grad_input,
+                              Tensor grad_offset, int pooled_height,
+                              int pooled_width, float spatial_scale,
+                              int sampling_ratio, float gamma);
+
+
+
 PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
   m.def("nms", &nms, "nms (CPU/CUDA)", py::arg("boxes"),
       py::arg("scores"), py::arg("iou_threshold"), py::arg("offset"));
@@ -53,4 +66,16 @@ PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
       py::arg("argmax_x"), py::arg("grad_input"), py::arg("aligned_height"),
       py::arg("aligned_width"), py::arg("spatial_scale"),
       py::arg("sampling_ratio"), py::arg("pool_mode"), py::arg("aligned"));
+
+  m.def("deform_roi_pool_forward", &deform_roi_pool_forward,
+        "deform roi pool forward", py::arg("input"), py::arg("rois"),
+        py::arg("offset"), py::arg("output"), py::arg("pooled_height"),
+        py::arg("pooled_width"), py::arg("spatial_scale"),
+        py::arg("sampling_ratio"), py::arg("gamma"));
+  m.def("deform_roi_pool_backward", &deform_roi_pool_backward,
+        "deform roi pool backward", py::arg("grad_output"), py::arg("input"),
+        py::arg("rois"), py::arg("offset"), py::arg("grad_input"),
+        py::arg("grad_offset"), py::arg("pooled_height"),
+        py::arg("pooled_width"), py::arg("spatial_scale"),
+        py::arg("sampling_ratio"), py::arg("gamma"));
 }
