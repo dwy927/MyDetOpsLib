@@ -10,36 +10,46 @@ struct BIPreCalc {
   T lx, ly, hx, hy;
 };
 
+
+// TODO: process the border carefully.
 template <typename T>
 __device__ void pre_calc_bilinear_interpolate(
     const int height, const int width, T y, T x, BIPreCalc<T>* pc) {
 
   // deal with cases that inverse elements are out of feature map boundary
-  if (y < -1.0 || y > height || x < -1.0 || x > width) {
+  // if (y < -1.0 || y > height || x < -1.0 || x > width) {
+  //   // empty
+  //   pc->w1 = pc->w2 = pc->w3 = pc->w4 = 0.;
+  //   pc->p1 = pc->p2 = pc->p3 = pc->p4 = -1;
+  //   pc->lx = pc->ly = pc->hx = pc->hy = 0;
+  //   return;
+  // }
+  if (y <= -1.0 || y >= height || x <= -1.0 || x >= width) {
     // empty
-    pc->w1 = pc->w2 = pc->w3 = pc->w4 = 0.;
+    pc->w1 = pc->w2 = pc->w3 = pc->w4 = 0;
     pc->p1 = pc->p2 = pc->p3 = pc->p4 = -1;
     pc->lx = pc->ly = pc->hx = pc->hy = 0;
     return;
   }
 
-  if (y <= 0) y = 0;
-  if (x <= 0) x = 0;
+
+  // if (y <= 0) y = 0;
+  // if (x <= 0) x = 0;
 
   int y1 = (int)y;
   int x1 = (int)x;
   int y2 = y1 + 1;
   int x2 = x1 + 1;
 
-  if (y1 >= height - 1) {
-    y1 = y2 = height - 1;
-    y = (T)y1;
-  }
+  // if (y1 >= height - 1) {
+  //   y1 = y2 = height - 1;
+  //   y = (T)y1;
+  // }
 
-  if (x1 >= width - 1) {
-    x1 = x2 = width - 1;
-    x = (T)x1;
-  }
+  // if (x1 >= width - 1) {
+  //   x1 = x2 = width - 1;
+  //   x = (T)x1;
+  // }
 
   T ly = y - y1;
   T lx = x - x1;
@@ -57,6 +67,11 @@ __device__ void pre_calc_bilinear_interpolate(
   pc->ly = ly;
   pc->hx = hx;
   pc->hy = hy;
+
+  if (x1 < 0 || y1 < 0) pc->w1 = 0;
+  if (x2 > width - 1 || y1 < 0) pc->w2 = 0;
+  if (x1 < 0 || y2 > height - 1) pc->w3 = 0;
+  if (x2 > width - 1 || y2 > height - 1) pc->w4 = 0;
 
   return;
 }

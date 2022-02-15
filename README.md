@@ -9,7 +9,7 @@ Ref from [mmcv](https://github.com/open-mmlab/mmcv).
 - [x] RoIPool
 - [x] RoIAlign
 - [x] DeformRoIPool
-- [ ] DeformConv2d
+- [x] DeformConv2d
 - [ ] FocalLoss
 - [ ] SyncBN
 - [ ] Voxelize
